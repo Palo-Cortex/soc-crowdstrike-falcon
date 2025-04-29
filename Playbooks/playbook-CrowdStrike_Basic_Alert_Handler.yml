@@ -1,0 +1,268 @@
+id: 29f020ea-1f69-4b49-8aaf-0dcf4d14bbb4
+version: 7
+vcShouldKeepItemLegacyProdMachine: false
+name: CrowdStrike Basic Alert Handler
+starttaskid: "0"
+tasks:
+  "0":
+    id: "0"
+    taskid: 2efe924f-d21c-4887-8834-78312684e62c
+    type: start
+    task:
+      id: 2efe924f-d21c-4887-8834-78312684e62c
+      version: -1
+      name: ""
+      iscommand: false
+      brand: ""
+    nexttasks:
+      '#none#':
+      - "7"
+    separatecontext: false
+    continueonerrortype: ""
+    view: |-
+      {
+        "position": {
+          "x": 531,
+          "y": 50
+        }
+      }
+    note: false
+    timertriggers: []
+    ignoreworker: false
+    skipunavailable: false
+    quietmode: 0
+    isoversize: false
+    isautoswitchedtoquietmode: false
+  "2":
+    id: "2"
+    taskid: a8d63340-7934-417a-82a5-05b922208501
+    type: condition
+    task:
+      id: a8d63340-7934-417a-82a5-05b922208501
+      version: -1
+      name: Initial Analyst Assessment
+      type: condition
+      iscommand: false
+      brand: ""
+    nexttasks:
+      Continue Investigation:
+      - "5"
+      Resolve as Benign True Positive (Close):
+      - "4"
+      Resolve as False Positive (No Action):
+      - "3"
+    separatecontext: false
+    continueonerrortype: ""
+    view: |-
+      {
+        "position": {
+          "x": 531,
+          "y": 382
+        }
+      }
+    note: false
+    timertriggers: []
+    ignoreworker: false
+    message:
+      to: null
+      subject: null
+      body:
+        simple: Please provide your early assessment of this detection
+      methods: []
+      format: ""
+      bcc: null
+      cc: null
+      timings:
+        retriescount: 2
+        retriesinterval: 360
+        completeafterreplies: 1
+        completeafterv2: true
+        completeaftersla: false
+      replyOptions:
+      - 'Resolve: False Positive (No Action - Close)'
+      - 'Resolve: Benign True Positive (No Action - Close)'
+      - Continue Investigation
+    skipunavailable: false
+    quietmode: 0
+    isoversize: false
+    isautoswitchedtoquietmode: false
+  "3":
+    id: "3"
+    taskid: f0a734ed-b5b2-4743-a856-5d18f0ecf040
+    type: regular
+    task:
+      id: f0a734ed-b5b2-4743-a856-5d18f0ecf040
+      version: -1
+      name: Resolve  - False Positive
+      description: commands.local.cmd.close.inv
+      script: Builtin|||closeInvestigation
+      type: regular
+      iscommand: true
+      brand: Builtin
+    nexttasks:
+      '#none#':
+      - "6"
+    scriptarguments:
+      closeNotes:
+        simple: 'Analyst has determined this to be a false positive detection. '
+      closeReason:
+        simple: Resolved - False Positive
+    separatecontext: false
+    continueonerrortype: ""
+    view: |-
+      {
+        "position": {
+          "x": 50,
+          "y": 550
+        }
+      }
+    note: false
+    timertriggers: []
+    ignoreworker: false
+    skipunavailable: false
+    quietmode: 0
+    isoversize: false
+    isautoswitchedtoquietmode: false
+  "4":
+    id: "4"
+    taskid: 44907ad2-0d9d-44fc-825a-62f9ddf64c44
+    type: regular
+    task:
+      id: 44907ad2-0d9d-44fc-825a-62f9ddf64c44
+      version: -1
+      name: Resolve as Benign True Positive
+      description: commands.local.cmd.close.inv
+      script: Builtin|||closeInvestigation
+      type: regular
+      iscommand: true
+      brand: Builtin
+    nexttasks:
+      '#none#':
+      - "6"
+    scriptarguments:
+      closeNotes:
+        simple: Analyst has determined this detection to be legitimate, but no further
+          actions are required.
+      closeReason:
+        simple: Resolved - True Positive
+    separatecontext: false
+    continueonerrortype: ""
+    view: |-
+      {
+        "position": {
+          "x": 531,
+          "y": 550
+        }
+      }
+    note: false
+    timertriggers: []
+    ignoreworker: false
+    skipunavailable: false
+    quietmode: 0
+    isoversize: false
+    isautoswitchedtoquietmode: false
+  "5":
+    id: "5"
+    taskid: e44fd3e3-2b0c-44ff-990b-a22031223cf5
+    type: title
+    task:
+      id: e44fd3e3-2b0c-44ff-990b-a22031223cf5
+      version: -1
+      name: Continue Investigation (Placeholder)
+      type: title
+      iscommand: false
+      brand: ""
+    separatecontext: false
+    continueonerrortype: ""
+    view: |-
+      {
+        "position": {
+          "x": 1012,
+          "y": 555
+        }
+      }
+    note: false
+    timertriggers: []
+    ignoreworker: false
+    skipunavailable: false
+    quietmode: 0
+    isoversize: false
+    isautoswitchedtoquietmode: false
+  "6":
+    id: "6"
+    taskid: 91650553-c90f-455e-b0c5-95518b2ef996
+    type: title
+    task:
+      id: 91650553-c90f-455e-b0c5-95518b2ef996
+      version: -1
+      name: Done
+      type: title
+      iscommand: false
+      brand: ""
+    separatecontext: false
+    continueonerrortype: ""
+    view: |-
+      {
+        "position": {
+          "x": 290.5,
+          "y": 720
+        }
+      }
+    note: false
+    timertriggers: []
+    ignoreworker: false
+    skipunavailable: false
+    quietmode: 0
+    isoversize: false
+    isautoswitchedtoquietmode: false
+  "7":
+    id: "7"
+    taskid: 0d39bb35-46f5-4831-a52f-ebbd5e30b7c2
+    type: regular
+    task:
+      id: 0d39bb35-46f5-4831-a52f-ebbd5e30b7c2
+      version: -1
+      name: Extract and Enrich Indicators
+      description: commands.local.cmd.extract.indicators
+      script: Builtin|||extractIndicators
+      type: regular
+      iscommand: true
+      brand: Builtin
+    nexttasks:
+      '#none#':
+      - "2"
+    scriptarguments:
+      text:
+        simple: ${alert}
+    separatecontext: false
+    continueonerror: true
+    continueonerrortype: ""
+    view: |-
+      {
+        "position": {
+          "x": 531,
+          "y": 210
+        }
+      }
+    note: false
+    timertriggers: []
+    ignoreworker: false
+    skipunavailable: false
+    quietmode: 0
+    isoversize: false
+    isautoswitchedtoquietmode: false
+view: |-
+  {
+    "linkLabelsPosition": {},
+    "paper": {
+      "dimensions": {
+        "height": 730,
+        "width": 1343,
+        "x": 50,
+        "y": 50
+      }
+    }
+  }
+inputs: []
+outputs: []
+quiet: true
