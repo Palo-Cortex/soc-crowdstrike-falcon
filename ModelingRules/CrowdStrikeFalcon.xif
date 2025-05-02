@@ -1,12 +1,9 @@
 /* ------------Crowdstrike Falcon Event Streams------------------ */
 [MODEL: dataset="crowdstrikefalcon_xsiam_generic_alert_raw"]
 filter product = "epp"
-| alter xdm.alert.category = _alert_data -> externalcategoryname[0],
-    xdm.alert.original_alert_id = _alert_data -> alertid,
-    xdm.alert.description = _alert_data -> description,
-    xdm.alert.name = _alert_data -> alert_type,
-    xdm.alert.mitre_tactics = _alert_data->mitretacticname[],
-    xdm.alert.mitre_techniques = _alert_data->mitretechniquename[],
+| alter 
+    xdm.alert.mitre_tactics = _alert_data -> tactic_list[],
+    xdm.alert.mitre_techniques = _alert_data -> techniques[],
     xdm.alert.severity = concat(to_string(Max_Severity), " - ", Max_Severity_DisplayName),
     xdm.event.original_event_type = incident_type,
     //xdm.event.outcome = "blocked",
