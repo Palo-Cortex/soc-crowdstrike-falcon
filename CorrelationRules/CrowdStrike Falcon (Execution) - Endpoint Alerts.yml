@@ -1,0 +1,122 @@
+action: ALERTS
+alert_category: OTHER
+alert_description: $description
+alert_domain: DOMAIN_SECURITY
+alert_fields:
+  _device_id: device_id
+  action_local_ip: local_ip
+  actor_effective_username: user_name
+  actor_process_command_line: cmdline
+  actor_process_image_name: filename
+  actor_process_image_path: filepath
+  actor_process_image_sha256: sha256
+  additionaldata: additional_data
+  agent_device_domain: domain
+  agent_hostname: hostname
+  agent_id: agent_id
+  alertaction: pattern_disposition_description
+  causality_actor_process_command_line: cgo_cmd
+  causality_actor_process_image_name: cgo_name
+  causality_actor_process_image_path: cgo_path
+  detectionid: template_instance_id
+  deviceexternalips: external_ip
+  external_pivot_url: falcon_host_link
+  externallink: falcon_host_link
+  mac: mac_address
+  mitretacticid: tactic_id
+  mitretacticname: tactic
+  mitretechniqueid: technique_id
+  mitretechniquename: technique
+  objective: objective
+  originalalertid: composite_id
+  parentprocesscmd: parent_process_cmd
+  parentprocessid: parent_process_name
+  parentprocessids: parent_local_process_id
+  parentprocessname: parent_process_name
+  parentprocesspath: parent_process_path
+  parentprocesssha256: parent_process_sha256
+  processcreationtime: process_start_time
+  processid: local_process_id
+  processmd5: md5
+  rawevent: raw_json
+  scenario: scenario
+  severity: severity_name
+  sourceid: aggregate_id
+  tim_main_indicator: indicator_id
+  userid: user_principal
+  usersid: user_id
+alert_name: CrowdStrike EPP Detection - $alert_name
+alert_type: null
+crontab: null
+dataset: alerts
+description: Creates an XSIAM alert for each CrowdStrike Falcon Endpoint Detection
+  Event
+drilldown_query_timeframe: ALERT
+execution_mode: REAL_TIME
+global_rule_id: CrowdStrike Falcon (Execution) - Endpoint Alerts
+investigation_query_link: '// All (stitched) activity from host - assuming raw telemetry
+  is being collected
+
+  dataset = xdr_data
+
+  | filter agent_hostname = $hostname
+
+  | fields * '
+is_enabled: false
+lookup_mapping: []
+mapping_strategy: CUSTOM
+mitre_defs:
+  TA0002 - Execution: []
+name: CrowdStrike Falcon (Execution) - Endpoint Alerts
+rule_id: 40
+search_window: null
+severity: User Defined
+simple_schedule: null
+suppression_duration: null
+suppression_enabled: false
+suppression_fields: null
+timezone: null
+user_defined_category: null
+user_defined_severity: severity_name
+xql_query: "/*\nTitle: CrowdStrike Falcon Detection Summary Alerts\nDescription: \
+  \ Single rule handler for any Detection Summary alert fetched from the CrowdStrike\
+  \ Falcon Integration\nDatasets: crowdstrikefalcon_generic_alert_raw (note, this\
+  \ may be different depending on how the initial integration is configured)\nDependencies:\
+  \  CrowdStrike Falcon automation integration\nImportant Note:  This will not work\
+  \ with alerts ingested via the \"CrowdStrike Platform\" (Event Stream API) integration\n\
+  Version: 0.1 (Beta) April 2025\n*/\nconfig case_sensitive = false\n|dataset = crowdstrikefalcon_xsiam_generic_alert_raw\
+  \  // Adjust this as needed - this is derived from the instance name of your integration\n\
+  \n// Basic filter - current rule not fully accounting for other CRWD alert types\
+  \ (eg. Identity)\n| filter product = \"epp\"\n// Filter on MITRE Tactic \n| filter\
+  \ lowercase(tactic) = \"execution\" or lowercase(tactic) = \"malware\"\n| alter\
+  \ cs_tactic = if(lowercase(tactic) = \"malware\", \"execution\") \n\n// Use this\
+  \ field to capture the MITRE Tactic for the Matrix below.  This rule is the catch-all\
+  \ in case the tactic is not defined.\n| alter tactic_list = arraycreate(\"initial\
+  \ access\",\"execution\",\"persistence\",\"privilege escalation\",\"defense evasion\"\
+  ,\"credential access\",\"discovery\",\"lateral movement\",\"collection\",\"command\
+  \ and control\",\"exfiltration\",\"impact\")\n| filter tactic_list contains lowercase(cs_tactic)\
+  \  \n\n// Grab full alert blob for display in layout\n| alter raw_json = _alert_data\
+  \ -> raw_json\n\n// Alert name\n| alter alert_name = name\n// Map critical fields\
+  \ used in grouping and display\n| alter mac_address = device->mac_address,\n   \
+  \     hostname = device->hostname,\n        domain = device->machine_domain,\n \
+  \       local_ip = device->local_ip,\n        external_ip = device->external_ip,\n\
+  \        device_id = device -> device_id,\n        parent_process_name = parent_details\
+  \ -> filename,\n        parent_process_cmd = parent_details -> cmdline,\n      \
+  \  parent_process_path = parent_details -> filepath,\n        parent_process_sha256\
+  \ = parent_details -> sha256,\n        parent_local_process_id = parent_details\
+  \ -> local_process_id,\n        grandparent_process_name = grandparent_details ->\
+  \ filename,\n        grandparent_process_cmd = grandparent_details -> cmdline,\n\
+  \        grandparent_process_path = grandparent_details -> filepath,\n        grandparent_process_sha256\
+  \ = grandparent_details -> sha256,\n        grandparent_local_process_id = grandparent_details\
+  \ -> local_process_id\n\n\n// Approximate cgo - Note, filtering typical root system\
+  \ processes can be adjusted. CGO is used for alert/issue grouping - this filter\
+  \ is intended to ignore over-grouping grouping on common root nodes\n| alter cgo_name\
+  \ = if(lowercase(grandparent_process_name) not in (\"wininit.exe\", \"userinit.exe\"\
+  ), grandparent_process_name, coalesce(parent_process_name, filename)),\n       \
+  \ cgo_path = if(lowercase(grandparent_process_name) not in (\"wininit.exe\", \"\
+  userinit.exe\"), grandparent_process_path , coalesce(parent_process_path, filepath)),\n\
+  \        cgo_cmd = if(lowercase(grandparent_process_name) not in (\"wininit.exe\"\
+  , \"userinit.exe\"), grandparent_process_path , coalesce(parent_process_cmd, cmdline))\n\
+  \n//creating additional_data field for possible future use \n| alter additional_data\
+  \ = null \n| fields device_id,local_ip,user_name,cmdline,filename,filepath,sha256,additional_data,domain,hostname,agent_id,pattern_disposition_description,cgo_cmd,cgo_name,cgo_path,template_instance_id,external_ip,falcon_host_link,falcon_host_link,mac_address,tactic_id,tactic,technique_id,technique,objective,composite_id,parent_process_cmd,parent_process_name,parent_local_process_id,parent_process_name,parent_process_path,parent_process_sha256,process_start_time,local_process_id,md5,raw_json,scenario,severity_name,aggregate_id,indicator_id,user_principal,user_id,device_id,local_ip,user_name,cmdline,filename,filepath,sha256,additional_data,domain,hostname,agent_id,pattern_disposition_description,cgo_cmd,cgo_name,cgo_path,template_instance_id,external_ip,falcon_host_link,falcon_host_link,mac_address,tactic_id,tactic,technique_id,technique,objective,composite_id,parent_process_cmd,parent_process_name,parent_local_process_id,parent_process_name,parent_process_path,parent_process_sha256,process_start_time,local_process_id,md5,raw_json,scenario,severity_name,aggregate_id,indicator_id,user_principal,user_id,\
+  \ *"

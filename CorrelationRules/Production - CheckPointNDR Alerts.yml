@@ -1,0 +1,40 @@
+action: ALERTS
+alert_category: User Defined
+alert_description: $alert_description
+alert_domain: DOMAIN_SECURITY
+alert_fields: {}
+alert_name: $alert_name
+alert_type: null
+crontab: null
+dataset: alerts
+description: null
+drilldown_query_timeframe: ALERT
+execution_mode: REAL_TIME
+global_rule_id: Production - CheckPointNDR Alerts
+investigation_query_link: ''
+is_enabled: true
+lookup_mapping: []
+mapping_strategy: AUTO
+mitre_defs: {}
+name: Production - CheckPointNDR Alerts
+rule_id: 25
+search_window: null
+severity: User Defined
+simple_schedule: null
+suppression_duration: null
+suppression_enabled: false
+suppression_fields: null
+timezone: null
+user_defined_category: alert_category
+user_defined_severity: alert_severity
+xql_query: 'dataset = checkpointndr_generic_alert_raw
+
+  | filter _alert_data != null
+
+  | alter alert_severity = json_extract_scalar(_alert_data, "$.severity")
+
+  | alter alert_category = json_extract_scalar(_alert_data, "$.alert_category")
+
+  | alter alert_name = json_extract_scalar(_alert_data, "$.alert_name")
+
+  | alter alert_description = json_extract_scalar(_alert_data, "$.alert_description")'
