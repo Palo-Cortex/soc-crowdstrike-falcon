@@ -1,4 +1,4 @@
-* ------------Crowdstrike Falcon Event Streams------------------ */
+/* ------------Crowdstrike Falcon Event Streams------------------ */
 [MODEL: dataset="crowdstrikefalcon_xsiam_generic_alert_raw"]
 filter product = "epp"
 | alter
