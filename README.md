@@ -4,7 +4,7 @@
 
 To install this content pack using the [Demisto SDK](https://github.com/demisto/demisto-sdk), run the following command:
 
-demisto-sdk upload -x -z -i /Users/sbrumley/IdeaProjects/xsiam-pov-automation/Packs/soc-crowdstrike-falcon
+demisto-sdk upload -x -z -i ./Packs/soc-crowdstrike-falcon
 
 > **Note:**  
 > - `-x` ensures the pack is zipped before upload.  
