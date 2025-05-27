@@ -1,6 +1,0 @@
-fromversion: 7.3.19507
-id: crowdstrike_Falcon_ModelingRule
-name: CrowdStrike Falcon Modeling Rule
-rules: ''
-schema: ''
-tags: CrowdStrike Falcon ModelingRules
