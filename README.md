@@ -13,10 +13,11 @@ demisto-sdk upload -x -z -i ./Packs/soc-crowdstrike-falcon
 
 Make sure your environment is properly configured with the XSIAM host and API key by using either:
 
-- A `.demisto-sdk-conf` file, **or**
+- A `.env` file, **or**
 - Setting the following environment variables:
   - `DEMISTO_BASE_URL`
   - `DEMISTO_API_KEY`
+  - `XSIAM_AUTH_ID`
 
 ---
 
