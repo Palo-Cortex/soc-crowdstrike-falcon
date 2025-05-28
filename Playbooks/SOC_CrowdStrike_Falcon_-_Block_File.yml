@@ -1,0 +1,588 @@
+contentitemexportablefields:
+  contentitemfields:
+    definitionid: ""
+    fromServerVersion: 6.10.0
+    isoverridable: false
+    itemVersion: ""
+    packID: ""
+    packName: ""
+    prevname: ""
+    toServerVersion: ""
+description: "This playbook receives an MD5 or a SHA256 hash and adds it to the block
+  list in CrowdStrike Falcon. \nThe playbook uses the integration \"CrowdStrike Falcon\"."
+dirtyInputs: true
+id: 'SOC CrowdStrike Falcon - Block File'
+inputs:
+- description: 'The severity of the indicator (informational, low, medium, high and
+    critical) '
+  key: 'Severity '
+  playbookInputQuery: null
+  required: true
+  value:
+    simple: medium
+- description: In this input you can insert either MD5 or SHA256 to block.
+  key: Hash
+  playbookInputQuery: null
+  required: false
+  value: {}
+name: SOC CrowdStrike Falcon - Block File
+outputs: []
+sourceplaybookid: CrowdStrike Falcon - Block File
+starttaskid: "0"
+tasks:
+  "0":
+    continueonerrortype: ""
+    id: "0"
+    ignoreworker: false
+    isautoswitchedtoquietmode: false
+    isoversize: false
+    nexttasks:
+      '#none#':
+      - "1"
+    note: false
+    quietmode: 0
+    separatecontext: false
+    skipunavailable: false
+    task:
+      brand: ""
+      id: 66384ed1-505c-46ae-85f0-fb9b5cf3f7b2
+      iscommand: false
+      name: ""
+      version: -1
+    taskid: 66384ed1-505c-46ae-85f0-fb9b5cf3f7b2
+    timertriggers: []
+    type: start
+    view: |-
+      {
+        "position": {
+          "x": 50,
+          "y": 50
+        }
+      }
+  "1":
+    continueonerrortype: ""
+    id: "1"
+    ignoreworker: false
+    isautoswitchedtoquietmode: false
+    isoversize: false
+    nexttasks:
+      '#default#':
+      - "3"
+      "yes":
+      - "9"
+    note: false
+    quietmode: 0
+    scriptarguments:
+      brandname:
+        simple: CrowdstrikeFalcon
+    separatecontext: false
+    skipunavailable: false
+    task:
+      brand: ""
+      description: Returns 'yes' if the integration brand is available. Otherwise
+        returns 'no'.
+      id: bef2902b-79cf-4462-8e1b-b9bf6dca1640
+      iscommand: false
+      name: 'Is CrowdStrike enabled? '
+      type: condition
+      version: -1
+    taskid: bef2902b-79cf-4462-8e1b-b9bf6dca1640
+    timertriggers: []
+    type: condition
+    view: |-
+      {
+        "position": {
+          "x": 50,
+          "y": 210
+        }
+      }
+  "3":
+    continueonerrortype: ""
+    id: "3"
+    ignoreworker: false
+    isautoswitchedtoquietmode: false
+    isoversize: false
+    note: false
+    quietmode: 0
+    separatecontext: false
+    skipunavailable: false
+    task:
+      brand: ""
+      id: c81d3d82-1f67-43e6-8c9f-81c13d5b64c7
+      iscommand: false
+      name: Done
+      type: title
+      version: -1
+    taskid: c81d3d82-1f67-43e6-8c9f-81c13d5b64c7
+    timertriggers: []
+    type: title
+    view: |-
+      {
+        "position": {
+          "x": 681,
+          "y": 1230
+        }
+      }
+  "7":
+    continueonerror: true
+    continueonerrortype: errorPath
+    id: "7"
+    ignoreworker: false
+    isautoswitchedtoquietmode: false
+    isoversize: false
+    nexttasks:
+      '#error#':
+      - "12"
+      '#none#':
+      - "3"
+    note: false
+    quietmode: 0
+    scriptarguments:
+      action:
+        simple: prevent
+      applied_globally:
+        simple: "true"
+      ioc_type:
+        simple: sha256
+      platforms:
+        simple: mac,windows,linux
+      severity:
+        complex:
+          root: 'inputs.Severity '
+      value:
+        complex:
+          filters:
+          - - left:
+                iscontext: true
+                value:
+                  simple: inputs.Hash
+              operator: stringHasLength
+              right:
+                value:
+                  simple: "64"
+          root: inputs.Hash
+          transformers:
+          - operator: uniq
+    separatecontext: false
+    skipunavailable: false
+    task:
+      brand: ""
+      description: Uploads an indicator for CrowdStrike to monitor.
+      id: 918f8305-b2b2-400b-9a60-31cb2685eb60
+      iscommand: true
+      name: Block by SHA256
+      script: '|||cs-falcon-upload-custom-ioc'
+      type: regular
+      version: -1
+    taskid: 918f8305-b2b2-400b-9a60-31cb2685eb60
+    timertriggers: []
+    type: regular
+    view: |-
+      {
+        "position": {
+          "x": 535.75,
+          "y": 890
+        }
+      }
+  "8":
+    continueonerror: true
+    continueonerrortype: errorPath
+    id: "8"
+    ignoreworker: false
+    isautoswitchedtoquietmode: false
+    isoversize: false
+    nexttasks:
+      '#error#':
+      - "12"
+      '#none#':
+      - "3"
+    note: false
+    quietmode: 0
+    scriptarguments:
+      action:
+        simple: prevent
+      applied_globally:
+        simple: "true"
+      ioc_type:
+        simple: md5
+      platforms:
+        simple: windows,mac,linux
+      severity:
+        complex:
+          root: 'inputs.Severity '
+      value:
+        complex:
+          filters:
+          - - left:
+                iscontext: true
+                value:
+                  simple: inputs.Hash
+              operator: stringHasLength
+              right:
+                value:
+                  simple: "32"
+          root: inputs.Hash
+          transformers:
+          - operator: uniq
+    separatecontext: false
+    skipunavailable: false
+    task:
+      brand: ""
+      description: Uploads an indicator for CrowdStrike to monitor.
+      id: 6b5ddc46-ae04-48f6-b5a3-21e32019ba31
+      iscommand: true
+      name: Block by MD5
+      script: '|||cs-falcon-upload-custom-ioc'
+      type: regular
+      version: -1
+    taskid: 6b5ddc46-ae04-48f6-b5a3-21e32019ba31
+    timertriggers: []
+    type: regular
+    view: |-
+      {
+        "position": {
+          "x": 1747.75,
+          "y": 890
+        }
+      }
+  "9":
+    conditions:
+    - condition:
+      - - left:
+            iscontext: true
+            value:
+              complex:
+                root: inputs.Hash
+          operator: isNotEmpty
+          right:
+            value: {}
+      label: "yes"
+    continueonerrortype: ""
+    id: "9"
+    ignoreworker: false
+    isautoswitchedtoquietmode: false
+    isoversize: false
+    nexttasks:
+      '#default#':
+      - "3"
+      "yes":
+      - "10"
+      - "11"
+    note: false
+    quietmode: 0
+    separatecontext: false
+    skipunavailable: false
+    task:
+      brand: ""
+      id: 3bcaf956-b075-4811-80c1-4e8e41e432fb
+      iscommand: false
+      name: Is there any file to block?
+      type: condition
+      version: -1
+    taskid: 3bcaf956-b075-4811-80c1-4e8e41e432fb
+    timertriggers: []
+    type: condition
+    view: |-
+      {
+        "position": {
+          "x": 245.25,
+          "y": 380
+        }
+      }
+  "10":
+    conditions:
+    - condition:
+      - - left:
+            iscontext: true
+            value:
+              complex:
+                root: inputs.Hash
+                transformers:
+                - operator: uniq
+          operator: stringHasLength
+          right:
+            value:
+              simple: "64"
+      label: "Yes"
+    continueonerrortype: ""
+    id: "10"
+    ignoreworker: false
+    isautoswitchedtoquietmode: false
+    isoversize: false
+    nexttasks:
+      '#default#':
+      - "3"
+      "Yes":
+      - "15"
+    note: false
+    quietmode: 0
+    separatecontext: false
+    skipunavailable: false
+    task:
+      brand: ""
+      id: fabefb86-6878-414c-856d-02552d18f5c6
+      iscommand: false
+      name: Has SHA256 Hashes?
+      type: condition
+      version: -1
+    taskid: fabefb86-6878-414c-856d-02552d18f5c6
+    timertriggers: []
+    type: condition
+    view: |-
+      {
+        "position": {
+          "x": 340.5,
+          "y": 550
+        }
+      }
+  "11":
+    conditions:
+    - condition:
+      - - left:
+            iscontext: true
+            value:
+              complex:
+                root: inputs.Hash
+                transformers:
+                - operator: uniq
+          operator: stringHasLength
+          right:
+            value:
+              simple: "32"
+      label: "Yes"
+    continueonerrortype: ""
+    id: "11"
+    ignoreworker: false
+    isautoswitchedtoquietmode: false
+    isoversize: false
+    nexttasks:
+      '#default#':
+      - "3"
+      "Yes":
+      - "13"
+    note: false
+    quietmode: 0
+    separatecontext: false
+    skipunavailable: false
+    task:
+      brand: ""
+      id: 5cf0a043-7781-4a6c-8643-9a1488c76c50
+      iscommand: false
+      name: Has MD5 Hashes?
+      type: condition
+      version: -1
+    taskid: 5cf0a043-7781-4a6c-8643-9a1488c76c50
+    timertriggers: []
+    type: condition
+    view: |-
+      {
+        "position": {
+          "x": 1552.5,
+          "y": 550
+        }
+      }
+  "12":
+    continueonerrortype: ""
+    id: "12"
+    ignoreworker: false
+    isautoswitchedtoquietmode: false
+    isoversize: false
+    nexttasks:
+      '#none#':
+      - "3"
+    note: false
+    quietmode: 0
+    separatecontext: true
+    skipunavailable: false
+    task:
+      brand: ""
+      id: c7d59071-11d6-44ce-8f9f-a242a11025f8
+      iscommand: false
+      name: Foundation - Error Handling
+      playbookId: Foundation - Error Handling
+      type: playbook
+      version: -1
+    taskid: c7d59071-11d6-44ce-8f9f-a242a11025f8
+    timertriggers: []
+    type: playbook
+    view: |-
+      {
+        "position": {
+          "x": 876.25,
+          "y": 1060
+        }
+      }
+  "13":
+    conditions:
+    - condition:
+      - - left:
+            iscontext: true
+            value:
+              simple: shadow_mode
+          operator: isFalse
+      label: "no"
+    continueonerrortype: ""
+    id: "13"
+    ignoreworker: false
+    isautoswitchedtoquietmode: false
+    isoversize: false
+    nexttasks:
+      '#default#':
+      - "14"
+      "no":
+      - "8"
+    note: false
+    quietmode: 0
+    separatecontext: false
+    skipunavailable: false
+    task:
+      brand: ""
+      id: 62dc9076-b102-4d9b-afe4-779f5a5b4b5d
+      iscommand: false
+      name: Shadow Run?
+      type: condition
+      version: -1
+    taskid: 62dc9076-b102-4d9b-afe4-779f5a5b4b5d
+    timertriggers: []
+    type: condition
+    view: |-
+      {
+        "position": {
+          "x": 1602.5,
+          "y": 720
+        }
+      }
+  "14":
+    continueonerrortype: ""
+    id: "14"
+    ignoreworker: false
+    isautoswitchedtoquietmode: false
+    isoversize: false
+    nexttasks:
+      '#none#':
+      - "3"
+    note: false
+    quietmode: 0
+    scriptarguments:
+      value:
+        simple: |-
+          Shadow Mode: Block by MD5
+          Command: cs-falcon-upload-custom-ioc
+    separatecontext: false
+    skipunavailable: false
+    task:
+      brand: ""
+      description: Prints text to war room (Markdown supported)
+      id: 42c33391-2c82-4a2c-b911-3b2d1fae1d40
+      iscommand: false
+      name: Print To WarRoom
+      script: Print
+      type: regular
+      version: -1
+    taskid: 42c33391-2c82-4a2c-b911-3b2d1fae1d40
+    timertriggers: []
+    type: regular
+    view: |-
+      {
+        "position": {
+          "x": 1457.25,
+          "y": 1060
+        }
+      }
+  "15":
+    conditions:
+    - condition:
+      - - left:
+            iscontext: true
+            value:
+              simple: shadow_mode
+          operator: isFalse
+      label: "no"
+    continueonerrortype: ""
+    id: "15"
+    ignoreworker: false
+    isautoswitchedtoquietmode: false
+    isoversize: false
+    nexttasks:
+      '#default#':
+      - "16"
+      "no":
+      - "7"
+    note: false
+    quietmode: 0
+    separatecontext: false
+    skipunavailable: false
+    task:
+      brand: ""
+      id: 03beb2ea-b70a-4a57-8a3f-3d33d54547c0
+      iscommand: false
+      name: Shadow Run?
+      type: condition
+      version: -1
+    taskid: 03beb2ea-b70a-4a57-8a3f-3d33d54547c0
+    timertriggers: []
+    type: condition
+    view: |-
+      {
+        "position": {
+          "x": 440.5,
+          "y": 720
+        }
+      }
+  "16":
+    continueonerrortype: ""
+    id: "16"
+    ignoreworker: false
+    isautoswitchedtoquietmode: false
+    isoversize: false
+    nexttasks:
+      '#none#':
+      - "3"
+    note: false
+    quietmode: 0
+    scriptarguments:
+      value:
+        simple: |-
+          Shadow Mode: Block by SHA256
+          Command: cs-falcon-upload-custom-ioc
+    separatecontext: false
+    skipunavailable: false
+    task:
+      brand: ""
+      description: Prints text to war room (Markdown supported)
+      id: cfdc6570-d945-4fec-8fc9-97ab3c58fafe
+      iscommand: false
+      name: Print To WarRoom
+      script: Print
+      type: regular
+      version: -1
+    taskid: cfdc6570-d945-4fec-8fc9-97ab3c58fafe
+    timertriggers: []
+    type: regular
+    view: |-
+      {
+        "position": {
+          "x": 245.25,
+          "y": 1060
+        }
+      }
+version: -1
+view: |-
+  {
+    "linkLabelsPosition": {
+      "10_15_Yes": 0.89,
+      "10_3_#default#": 0.24,
+      "11_3_#default#": 0.49,
+      "1_3_#default#": 0.37,
+      "9_11_yes": 0.64,
+      "9_3_#default#": 0.3
+    },
+    "paper": {
+      "dimensions": {
+        "height": 1240,
+        "width": 2078.75,
+        "x": 50,
+        "y": 50
+      }
+    }
+  }
