@@ -1,0 +1,30 @@
+/* ------------Crowdstrike Falcon Event Streams------------------ */
+[MODEL: dataset="crowdstrikefalcon_xsiam_generic_alert_raw"]
+filter product = "epp"
+| alter 
+    xdm.alert.severity = concat(to_string(Max_Severity), " - ", Max_Severity_DisplayName),
+    xdm.event.original_event_type = incident_type,
+    //xdm.event.outcome = "blocked",
+    xdm.event.outcome_reason = objective,
+    //xdm.event.operation = "execute",
+
+    xdm.event.description = description,
+
+    xdm.source.process.pid = to_integer(_alert_data -> processid[0]),
+    xdm.source.host.fqdn = device -> machine_domain,
+    xdm.source.host.os_family = device -> os_version,
+    xdm.event.type = incident_type,
+    xdm.source.ipv4 = _alert_data -> local_ip,
+    xdm.source.user.username = user_name ,
+    xdm.source.user.domain = device->machine_domain,
+    xdm.source.process.command_line = parent_details -> cmdline,
+    xdm.source.user.groups = device -> groups[],
+    xdm.source.host.hostname = device->hostname,
+    xdm.source.process.name = parent_details -> filename,
+    xdm.source.process.executable.path = parent_details -> filepath,
+    xdm.source.process.executable.sha256 = parent_details -> sha256,
+
+    xdm.target.host.mac_addresses = arraycreate(device -> mac_address),
+    xdm.target.user.username = _alert_data -> actor_effective_username[0],
+    xdm.target.ipv4 = network_accesses -> remote_address,
+    xdm.target.port = to_integer(network_accesses -> remote_port);
