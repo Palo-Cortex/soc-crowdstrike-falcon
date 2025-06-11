@@ -3,6 +3,7 @@ version: 7
 vcShouldKeepItemLegacyProdMachine: false
 name: CrowdStrike Basic Alert Handler
 starttaskid: "0"
+adopted: true
 tasks:
   "0":
     id: "0"
