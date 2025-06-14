@@ -10,7 +10,7 @@
         {
             "id": "CrowdStrikeFalcon",
             "name": "CrowdStrike Falcon",
-            "version": "2.1.23"
+            "version": "latest"
         }
     ],
     "integration_instances": [
