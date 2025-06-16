@@ -1,0 +1,18 @@
+{
+  "rule_id": "CrowdStrike_Layout_Rule",
+  "layout_id": "CrowdStrike Endpoint Alert Layout",
+  "description": "Default display for CrowdStrike alerts.",
+  "rule_name": "CrowdStrike Layout Rule",
+  "alerts_filter": {
+    "filter": {
+      "AND": [
+        {
+            "SEARCH_FIELD": "alert_type",
+            "SEARCH_TYPE": "EQ",
+            "SEARCH_VALUE": "CrowdStrikeFalcon"
+        }
+      ]
+    }
+  },
+  "fromVersion": "6.10.0"
+}

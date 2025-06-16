@@ -21,7 +21,7 @@
             ],
             "isOverridable": false,
             "enabled": "true",
-            "name": "CrowdstrikeFalcon_instance_1",
+            "name": "CrowdstrikeFalcon_Events",
             "brand": "CrowdstrikeFalcon",
             "category": "Endpoint",
             "engine": "",
