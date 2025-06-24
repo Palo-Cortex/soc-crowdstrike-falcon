@@ -4,6 +4,13 @@ This repository enhances the native CrowdStrike Falcon integration within Palo A
 
 ---
 
+## ⚙️ Prerequisites
+
+- Configure **CrowdStrike Falcon** integration via **Marketplace**
+- If using **CrowdStrike Platform** integration, **disable Alert Fetch**
+
+---
+
 ## 🚀 Purpose
 
 This pack enables Cortex XSIAM to more effectively operationalize CrowdStrike Falcon telemetry by:
