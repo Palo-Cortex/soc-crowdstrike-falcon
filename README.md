@@ -21,7 +21,6 @@ This pack enables Cortex XSIAM to more effectively operationalize CrowdStrike Fa
 |------------------|-----------------------------------------------------------------------------|
 | **Layouts**       | Analyst-centric views showing CrowdStrike event details, detections, and host context. |
 | **Correlation Rules** | Rules for identifying lateral movement, hands-on-keyboard activity, and malware execution. |
-| **Mappers**       | Normalization logic for mapping CrowdStrike events into XSIAM’s data model. |
 | **Data Models**   | XDM schema extensions aligned to Falcon detection and event fields. |
 
 ---
@@ -59,7 +58,7 @@ This pack enables Cortex XSIAM to more effectively operationalize CrowdStrike Fa
 1. Clone this repository.
 2. Use the [Demisto “XSOAR” SDK](https://github.com/demisto/demisto-sdk) to upload content to Cortex XSIAM.
 3. Choose and enable correlation rules based on your detection objectives.
-4. Deploy and validate layouts, mappers, and models.
+4. Deploy and validate layouts, and models.
 5. Tune as needed for your threat model and operational needs.
 
 ---
