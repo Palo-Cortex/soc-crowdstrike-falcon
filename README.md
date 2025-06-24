@@ -29,6 +29,10 @@ This pack enables Cortex XSIAM to more effectively operationalize CrowdStrike Fa
 | **Layouts**       | Analyst-centric views showing CrowdStrike event details, detections, and host context. |
 | **Correlation Rules** | Rules for identifying lateral movement, hands-on-keyboard activity, and malware execution. |
 | **Data Models**   | XDM schema extensions aligned to Falcon detection and event fields. |
+| **Automation Scripts** |  
+| `displayCrowdStrikeEvidence_xsiam` | Displays raw alert record cleanly in layout tab/dynamic sections. |
+| `displayCrowdStrikeHostRecord_xsiam` | Renders full host record in layout tab/dynamic sections. |
+| `displayCrowdStrikeHostStatus_xsiam` | Shows host status in a structured format inside layout sections. |
 
 ---
 
