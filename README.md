@@ -57,7 +57,7 @@ This pack enables Cortex XSIAM to more effectively operationalize CrowdStrike Fa
 ## 🛠️ How to Use
 
 1. Clone this repository.
-2. Use the [Demisto “XSOAR” SDK](https://xsoar.pan.dev/docs/concepts/dev-setup) to upload content to Cortex XSIAM.
+2. Use the [Demisto “XSOAR” SDK](https://github.com/demisto/demisto-sdk) to upload content to Cortex XSIAM.
 3. Choose and enable correlation rules based on your detection objectives.
 4. Deploy and validate layouts, mappers, and models.
 5. Tune as needed for your threat model and operational needs.
