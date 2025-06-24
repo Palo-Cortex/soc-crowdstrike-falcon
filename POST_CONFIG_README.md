@@ -4,13 +4,6 @@ Enhances the native CrowdStrike Falcon integration in Cortex XSIAM with tailored
 
 ---
 
-## ⚙️ Prerequisites
-
-- Configure **CrowdStrike Falcon** integration via **Marketplace**
-- If using **CrowdStrike Platform** integration, **disable Alert Fetch**
-
----
-
 ## 🚀 Configuration Steps
 
 ### 1. Layout Rule (Recommended)
