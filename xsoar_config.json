@@ -6,6 +6,12 @@
             "system": "yes"
         }
     ],
+    "post_config_docs": [
+        {
+            "name": "SOC Crowdstrike Falcon - Manual Steps",
+            "url": "https://github.com/Palo-Cortex/soc-crowdstrike-falcon/blob/main/POST_CONFIG_README.md"
+        }
+    ],
     "marketplace_packs": [
         {
             "id": "CrowdStrikeFalcon",
@@ -20,8 +26,8 @@
                 "all"
             ],
             "isOverridable": false,
-            "enabled": "true",
-            "name": "CrowdstrikeFalcon_instance_1",
+            "enabled": "false",
+            "name": "CrowdstrikeFalcon_Detections_Incidents",
             "brand": "CrowdstrikeFalcon",
             "category": "Endpoint",
             "engine": "",
@@ -526,11 +532,8 @@
                     "info": "Choose what to fetch -  You can choose any combination. Notes: 1. The 'On-Demand Scans Detection' option is not available in the legacy version.\n2. Records from the detection endpoint of the CrowdStrike Falcon UI could be of types: 'Endpoint Detection' and 'OFP Detection'.",
                     "hasvalue": true,
                     "value": [
-                        "IDP Detection",
                         "Endpoint Detection",
-                        "Mobile Detection",
-                        "On-Demand Scans Detection",
-                        "OFP Detection"
+                        "Endpoint Incident"
                     ]
                 },
                 {
