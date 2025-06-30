@@ -2,7 +2,7 @@
     "custom_packs": [
         {
             "id": "soc-crowdstrike-falcon.zip",
-            "url": "https://github.com/Palo-Cortex/soc-crowdstrike-falcon/archive/refs/tags/v1.0.6.zip",
+            "url": "https://github.com/Palo-Cortex/soc-crowdstrike-falcon/archive/refs/tags/v1.0.7.zip",
             "system": "yes"
         }
     ],
