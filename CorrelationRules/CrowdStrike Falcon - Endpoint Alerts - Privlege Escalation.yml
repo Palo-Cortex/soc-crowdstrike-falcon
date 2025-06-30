@@ -74,8 +74,8 @@ lookup_mapping: []
 mapping_strategy: CUSTOM
 mitre_defs:
   TA0004 - Privilege Escalation: []
-name: CrowdStrike Falcon - Endpoint Alerts - Privlege Escalation
-rule_id: 57
+name: CrowdStrike Falcon - Endpoint Alerts - Privilege Escalation
+rule_id: 134
 search_window: null
 severity: User Defined
 simple_schedule: null
@@ -92,7 +92,7 @@ xql_query: "/*\nTitle: CrowdStrike Falcon - Endpoint Alerts - Privilege Escalati
   \ initial integration is configured)\nDependencies:  CrowdStrike Falcon automation\
   \ integration\nImportant Note:  This will not work with alerts ingested via the\
   \ \"CrowdStrike Platform\" (Event Stream API) integration\nVersion: 0.1 (Beta) April\
-  \ 2025\n*/\nconfig case_sensitive = false\n| dataset = crowdstrikefalcon_xsiam_generic_alert_raw\
+  \ 2025\n*/\nconfig case_sensitive = false\n| dataset = crowdstrike_falcon_event_raw\
   \ \n| filter product = \"epp\"\n\n// Alert metadata extraction\n| alter alert_name\
   \ = display_name\n\n| filter tactic = \"Privilege Escalation\"\n\n// Extract fields\
   \ from nested objects for use in alert table mapping, grouping and display.\n| alter\
