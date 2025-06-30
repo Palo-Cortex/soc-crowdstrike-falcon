@@ -1,7 +1,7 @@
-[MODEL: dataset="crowdstrike_falcon_event_raw"]
+[MODEL:dataset="crowdstrike_falcon_event_raw"]
 filter product = "epp"
-| alter 
-    xdm.alert.severity = concat(to_string(severity), " - ", severity_name),
+| alter
+    xdm.alert.severity  = concat(to_string(severity), " - ", severity_name),
     xdm.event.original_event_type = incident_type,
     xdm.event.description = description,
     xdm.source.process.pid = to_integer(parent_process_id),

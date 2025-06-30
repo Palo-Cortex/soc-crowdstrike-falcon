@@ -1,5 +1,5 @@
 {
-  "crowdstrikefalcon_xsiam_generic_alert_raw": {
+  "crowdstrike_falcon_event_raw": {
     "product": {
       "type": "string",
       "is_array": false
