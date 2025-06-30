@@ -6,15 +6,30 @@ Enhances the native CrowdStrike Falcon integration in Cortex XSIAM with tailored
 
 ## 🚀 Configuration Steps
 
-### 1. Layout Rule (Recommended)
+### 1. Configure the CrowdStrike Falcon Integration Instance
+1. Navigate to **Settings → Configurations → Data Collection → Automation & Feed Integration**
+2. Expand the CrowdStrike Falcon instance dropdown 
+3. Click on the gear next to the _CrowdstrikeFalcon_Detections_Incidents_
+4. Update the integration instance’s configuration for the following form fields: 
+   1. Server URL
+   2. Client ID
+   3. Secret
+   
+5. Test and save the integration instance configuration
+6. **Enable** the instance
+
+---
+
+### 2. Layout Rule (Recommended)
 
 - Use condition: `tags contains "DS:CrowdStrike"`
 - Designed for correlation alerts; compatible with FDR-based alerts (BIOCs/Analytics)
 - **Note:** First alert must be ingested before DS tag can be used in a rule
 
+
 ---
 
-### 2. Playbook Trigger (Recommended)
+### 3. Playbook Trigger (Recommended)
 
 - Use condition: `tags = "DS:CrowdStrike_xxx"`
 - Triggers enrichment and response playbooks
@@ -22,14 +37,14 @@ Enhances the native CrowdStrike Falcon integration in Cortex XSIAM with tailored
 
 ---
 
-### 3. Correlation Rule Strategy
+### 4. Correlation Rule Strategy
 
 - **Option 1:** 12 MITRE tactic-specific rules (granular visibility, harder to manage at scale)
 - **Option 2:** 2 simplified rules (EDR/EPP and IDP events; IDP currently lacks MITRE mapping)
 
 ---
 
-### 4. Dashboards
+### 5. Dashboards
 
 - Compatible with XSIAM 2.x
 - Update drilldown link on **CrowdStrike Alert Table** to match your tenant for alert navigation
