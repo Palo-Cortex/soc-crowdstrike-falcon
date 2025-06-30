@@ -1,4 +1,4 @@
-[MODEL: dataset="crowdstrikefalcon_xsiam_generic_alert_raw"]
+[MODEL: dataset="crowdstrike_falcon_event_raw"]
 filter product = "epp"
 | alter 
     xdm.alert.severity = concat(to_string(severity), " - ", severity_name),
