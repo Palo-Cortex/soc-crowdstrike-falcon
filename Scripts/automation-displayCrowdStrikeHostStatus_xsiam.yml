@@ -1,5 +1,5 @@
 commonfields:
-  id: 9f87efe7-6b16-4b22-877a-08861684e742
+  id: displayCrowdStrikeHostStatus_xsiam
   version: 8
 vcShouldKeepItemLegacyProdMachine: false
 name: displayCrowdStrikeHostStatus_xsiam
@@ -44,3 +44,4 @@ dockerimage: demisto/python3:3.12.8.1983910
 runas: DBotWeakRole
 engineinfo: {}
 mainengineinfo: {}
+fromversion: 5.0.0

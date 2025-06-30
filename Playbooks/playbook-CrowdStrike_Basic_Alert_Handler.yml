@@ -1,4 +1,4 @@
-id: 29f020ea-1f69-4b49-8aaf-0dcf4d14bbb4
+id: CrowdStrike Basic Alert Handler
 version: 7
 vcShouldKeepItemLegacyProdMachine: false
 name: CrowdStrike Basic Alert Handler
@@ -267,3 +267,4 @@ view: |-
 inputs: []
 outputs: []
 quiet: true
+fromversion: 5.0.0
