@@ -30,6 +30,7 @@ alert_fields:
   externalconfidence: confidence
   externallink: falcon_host_link
   externalseverity: severity
+  filehash: sha256
   mac: mac_address
   mitretacticid: tactic_id
   mitretacticname: tactic
@@ -43,6 +44,8 @@ alert_fields:
   parentprocessname: parent_process_name
   parentprocesspath: parent_process_path
   parentprocesssha256: parent_process_sha256
+  postnatdestinationip: remote_ips
+  prenatsourceip: local_ip
   processcreationtime: process_start_time
   processid: grandparent_local_process_id
   processmd5: md5
@@ -69,13 +72,13 @@ investigation_query_link: '// All (stitched) activity from host - assuming raw t
   | filter agent_hostname = $hostname
 
   | fields * '
-is_enabled: false
+is_enabled: true
 lookup_mapping: []
 mapping_strategy: CUSTOM
 mitre_defs:
   TA0042 - Resource Development: []
 name: CrowdStrike Falcon - Endpoint Alerts - Resource Development
-rule_id: 169
+rule_id: 200
 search_window: null
 severity: User Defined
 simple_schedule: null
