@@ -30,6 +30,7 @@ alert_fields:
   externalconfidence: confidence
   externallink: falcon_host_link
   externalseverity: severity
+  filehash: sha256
   mac: mac_address
   mitretacticid: tactic_id
   mitretacticname: tactic
@@ -43,6 +44,8 @@ alert_fields:
   parentprocessname: parent_process_name
   parentprocesspath: parent_process_path
   parentprocesssha256: parent_process_sha256
+  postnatdestinationip: remote_ips
+  prenatsourceip: local_ip
   processcreationtime: process_start_time
   processid: grandparent_local_process_id
   processmd5: md5
@@ -75,7 +78,7 @@ mapping_strategy: CUSTOM
 mitre_defs:
   TA0005 - Defense Evasion: []
 name: CrowdStrike Falcon - Endpoint Alerts - Defense Evasion
-rule_id: 128
+rule_id: 188
 search_window: null
 severity: User Defined
 simple_schedule: null
@@ -94,25 +97,26 @@ xql_query: "/*\nTitle: CrowdStrike Falcon - Endpoint Alerts - Defense Evasion\nD
   \ API) integration\nVersion: 0.1 (Beta) April 2025\n*/\nconfig case_sensitive =\
   \ false\n| dataset = crowdstrike_falcon_event_raw \n| filter product = \"epp\"\n\
   \n// Alert metadata extraction\n| alter alert_name = display_name\n\n| filter tactic\
-  \ = \"Defense Evasion\"\n\n// Extract fields from nested objects for use in alert\
-  \ table mapping, grouping and display.\n| alter \n        hostname = device->hostname,\n\
-  \        domain = device->machine_domain,\n        local_ip = device->local_ip,\n\
-  \        external_ip = device->external_ip,\n        mac_address = device->mac_address,\n\
-  \        device_id = device -> device_id,\n        device_ou = device -> ou[],\n\
-  \        parent_process_name = parent_details -> filename,\n        parent_process_cmd\
-  \ = parent_details -> cmdline,\n        parent_process_path = parent_details ->\
-  \ filepath,\n        parent_process_sha256 = parent_details -> sha256,\n       \
-  \ parent_local_process_id = parent_details -> local_process_id,\n        grandparent_process_name\
-  \ = grandparent_details -> filename,\n        grandparent_process_cmd = grandparent_details\
-  \ -> cmdline,\n        grandparent_process_path = grandparent_details -> filepath,\n\
-  \        grandparent_process_sha256 = grandparent_details -> sha256,\n        grandparent_local_process_id\
-  \ = grandparent_details -> local_process_id\n\n// Approximate cgo - Note, filtering\
-  \ typical root system processes can be adjusted. CGO is used for alert/issue grouping\
-  \ - this filter is intended to ignore over-grouping grouping on common root nodes\n\
-  | alter cgo_name = if(lowercase(grandparent_process_name) not in (\"wininit.exe\"\
-  , \"userinit.exe\"), grandparent_process_name, coalesce(parent_process_name, filename)),\n\
-  \        cgo_path = if(lowercase(grandparent_process_name) not in (\"wininit.exe\"\
-  , \"userinit.exe\"), grandparent_process_path , coalesce(parent_process_path, filepath)),\n\
+  \ = \"Defense Evasion\" or tactic = \"Execution Prevention Bypass\"\n\n// Extract\
+  \ fields from nested objects for use in alert table mapping, grouping and display.\n\
+  | alter \n        hostname = device->hostname,\n        domain = device->machine_domain,\n\
+  \        local_ip = device->local_ip,\n        external_ip = device->external_ip,\n\
+  \        mac_address = device->mac_address,\n        device_id = device -> device_id,\n\
+  \        device_ou = device -> ou[],\n        parent_process_name = parent_details\
+  \ -> filename,\n        parent_process_cmd = parent_details -> cmdline,\n      \
+  \  parent_process_path = parent_details -> filepath,\n        parent_process_sha256\
+  \ = parent_details -> sha256,\n        parent_local_process_id = parent_details\
+  \ -> local_process_id,\n        grandparent_process_name = grandparent_details ->\
+  \ filename,\n        grandparent_process_cmd = grandparent_details -> cmdline,\n\
+  \        grandparent_process_path = grandparent_details -> filepath,\n        grandparent_process_sha256\
+  \ = grandparent_details -> sha256,\n        grandparent_local_process_id = grandparent_details\
+  \ -> local_process_id\n\n// Approximate cgo - Note, filtering typical root system\
+  \ processes can be adjusted. CGO is used for alert/issue grouping - this filter\
+  \ is intended to ignore over-grouping grouping on common root nodes\n| alter cgo_name\
+  \ = if(lowercase(grandparent_process_name) not in (\"wininit.exe\", \"userinit.exe\"\
+  ), grandparent_process_name, coalesce(parent_process_name, filename)),\n       \
+  \ cgo_path = if(lowercase(grandparent_process_name) not in (\"wininit.exe\", \"\
+  userinit.exe\"), grandparent_process_path , coalesce(parent_process_path, filepath)),\n\
   \        cgo_cmd = if(lowercase(grandparent_process_name) not in (\"wininit.exe\"\
   , \"userinit.exe\"), grandparent_process_path , coalesce(parent_process_cmd, cmdline))\n\
   \n// Clean up field formatting \n| alter device_ou_arr = arraymap(device_ou, replace(\"\

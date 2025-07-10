@@ -1,5 +1,5 @@
 action: ALERTS
-alert_category: EXFILTRATION
+alert_category: PERSISTENCE
 alert_description: $description
 alert_domain: DOMAIN_SECURITY
 alert_fields:
@@ -63,7 +63,7 @@ description: Creates an XSIAM alert for each CrowdStrike Falcon Endpoint Detecti
   Event
 drilldown_query_timeframe: ALERT
 execution_mode: REAL_TIME
-global_rule_id: CrowdStrike Falcon - Endpoint Alerts - Exfiltration
+global_rule_id: CrowdStrike Falcon - Endpoint Alerts - Resource Development
 investigation_query_link: '// All (stitched) activity from host - assuming raw telemetry
   is being collected
 
@@ -76,9 +76,9 @@ is_enabled: true
 lookup_mapping: []
 mapping_strategy: CUSTOM
 mitre_defs:
-  TA0010 - Exfiltration: []
-name: CrowdStrike Falcon - Endpoint Alerts - Exfiltration
-rule_id: 194
+  TA0042 - Resource Development: []
+name: CrowdStrike Falcon - Endpoint Alerts - Resource Development
+rule_id: 200
 search_window: null
 severity: User Defined
 simple_schedule: null
@@ -88,17 +88,17 @@ suppression_fields: null
 timezone: null
 user_defined_category: null
 user_defined_severity: severity_name
-xql_query: "/*\nTitle: CrowdStrike Falcon - Endpoint Alerts - Exfiltration\nDescription:\
+xql_query: "/*\nTitle: CrowdStrike Falcon - Endpoint Alerts - Persistence\nDescription:\
   \  Single rule handler for any Detection Summary alert fetched from the CrowdStrike\
-  \ Falcon Integration\nNITRE Tactic: Exfiltration\nDatasets: crowdstrike_falcon_event_raw\
+  \ Falcon Integration\nNITRE Tactic: Persistence\nDatasets: crowdstrike_falcon_event_raw\
   \ (note, this may be different depending on how the initial integration is configured)\n\
   Dependencies:  CrowdStrike Falcon automation integration\nImportant Note:  This\
   \ will not work with alerts ingested via the \"CrowdStrike Platform\" (Event Stream\
   \ API) integration\nVersion: 0.1 (Beta) April 2025\n*/\nconfig case_sensitive =\
   \ false\n| dataset = crowdstrike_falcon_event_raw \n| filter product = \"epp\"\n\
   \n// Alert metadata extraction\n| alter alert_name = display_name\n\n| filter tactic\
-  \ = \"Exfiltration\"\n\n// Extract fields from nested objects for use in alert table\
-  \ mapping, grouping and display.\n| alter \n        hostname = device->hostname,\n\
+  \ = \"Resource Development\"\n\n// Extract fields from nested objects for use in\
+  \ alert table mapping, grouping and display.\n| alter \n        hostname = device->hostname,\n\
   \        domain = device->machine_domain,\n        local_ip = device->local_ip,\n\
   \        external_ip = device->external_ip,\n        mac_address = device->mac_address,\n\
   \        device_id = device -> device_id,\n        device_ou = device -> ou[],\n\
