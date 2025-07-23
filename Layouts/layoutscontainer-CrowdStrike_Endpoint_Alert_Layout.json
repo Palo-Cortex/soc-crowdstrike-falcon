@@ -743,7 +743,7 @@
 	"edit": null,
 	"fromServerVersion": "6.0.0",
 	"group": "incident",
-	"id": "CrowdStrike Endpoint Alert Layout",
+	"id": "9c968da6-7ce8-40be-8689-ca29c8413abe",
 	"indicatorsDetails": null,
 	"indicatorsQuickView": null,
 	"isOverridable": false,
@@ -753,6 +753,7 @@
 	"name": "CrowdStrike Endpoint Alert Layout",
 	"packID": "",
 	"packName": "SOC CrowdStrike Falcon Integration Enhancement for Cortex XSIAM",
+	"propagationLabels": [],
 	"quickView": {
 		"sections": [
 			{
