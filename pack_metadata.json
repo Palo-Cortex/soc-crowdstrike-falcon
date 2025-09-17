@@ -2,16 +2,19 @@
     "name": "SOC CrowdStrike Falcon Integration Enhancement for Cortex XSIAM",
     "id": "soc-crowdstrike-falcon",
     "description": "This contains the content for XSIAM CrowdStrike Falcon.  This includes layouts, playbooks and incident fields",
-    "support": "community",
+    "support": "xsoar",
     "currentVersion": "1.0.10",
-    "author": "Scott Brumley",
-    "url": "https://live.paloaltonetworks.com/t5/cortex-xsoar-discussions/bd-p/Cortex_XSOAR_Discussions",
+    "author": "Cortex XSOAR",
+    "url": "https://www.paloaltonetworks.com/cortex",
     "email": "",
     "categories": [
         "Endpoint"
     ],
     "tags": [
+        "SOC",
         "SOC_Framework",
+        "Utility",
+        "Palo Alto Networks Products",
         "Utility"
     ],
     "useCases": [],
@@ -19,9 +22,6 @@
     "marketplaces": [
         "xsoar",
         "marketplacev2"
-    ],
-    "githubUser": [
-        "scottbrumley"
     ],
     "dependencies": {},
     "displayedImages": []
