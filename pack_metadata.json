@@ -3,7 +3,7 @@
     "id": "soc-crowdstrike-falcon",
     "description": "This contains the content for XSIAM CrowdStrike Falcon.  This includes layouts, playbooks and incident fields",
     "support": "community",
-    "currentVersion": "1.0.9",
+    "currentVersion": "1.0.10",
     "author": "Scott Brumley",
     "url": "https://live.paloaltonetworks.com/t5/cortex-xsoar-discussions/bd-p/Cortex_XSOAR_Discussions",
     "email": "",
