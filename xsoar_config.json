@@ -6,9 +6,15 @@
             "system": "yes"
         }
     ],
+    "pre_config_docs": [
+        {
+            "name": "SOC CrowdStrike Falcon Enhancement - Pre-Automation Steps",
+            "url": "https://github.com/Palo-Cortex/crowdstrike/blob/main/PRE_CONFIG_README.md"
+        }
+    ],
     "post_config_docs": [
         {
-            "name": "SOC Crowdstrike Falcon - Manual Steps",
+            "name": "SOC Crowdstrike Falcon Enhancement - Manual Steps",
             "url": "https://github.com/Palo-Cortex/soc-crowdstrike-falcon/blob/main/POST_CONFIG_README.md"
         }
     ],
