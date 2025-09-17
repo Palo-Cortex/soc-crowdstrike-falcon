@@ -1,5 +1,6 @@
 {
     "name": "SOC CrowdStrike Falcon Integration Enhancement for Cortex XSIAM",
+    "id": "soc-crowdstrike-falcon",
     "description": "This contains the content for XSIAM CrowdStrike Falcon.  This includes layouts, playbooks and incident fields",
     "support": "community",
     "currentVersion": "1.0.9",
