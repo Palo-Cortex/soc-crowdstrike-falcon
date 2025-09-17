@@ -16,3 +16,4 @@ tags:
 - dynamic-section
 type: python
 adopted: true
+fromversion: 5.0.0
