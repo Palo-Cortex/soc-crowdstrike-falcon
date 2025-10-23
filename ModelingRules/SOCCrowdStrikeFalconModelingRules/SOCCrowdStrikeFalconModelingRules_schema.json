@@ -20,7 +20,7 @@
       "type": "string",
       "is_array": false
     },
-    "parent_process_id": {
+    "local_process_id": {
       "type": "string",
       "is_array": false
     },
