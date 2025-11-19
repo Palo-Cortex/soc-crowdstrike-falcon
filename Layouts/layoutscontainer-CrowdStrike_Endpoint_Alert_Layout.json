@@ -870,5 +870,6 @@
   "system": false,
   "toServerVersion": "99.99.99",
   "version": -1,
-  "fromVersion": "6.0.0"
+  "fromVersion": "6.0.0",
+  "adopted": true
 }
